@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,9 +17,23 @@ const Login = () => {
       return;
     }
 
-    setName("");
-    setEmail("");
-    setError("");
+    const handlelogin = async() => await axios.post(import.meta.env.VITE_API_URL + "/auth/login", {
+      name,
+      email,
+      }
+    ).then((response) => {
+      localStorage.setItem("user", response.data.user);
+      navigate("/home");
+    }).catch((error) => {
+      setError(error.response.data.message);
+    });
+    handlelogin();
+
+    setTimeout(() => {
+      setName("");
+      setEmail("");
+      setError("");
+    }, 5000);
   };
 
   return (
