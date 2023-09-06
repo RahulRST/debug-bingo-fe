@@ -9,7 +9,11 @@ const Game = () => {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    const query = async() => await axios.get(import.meta.env.VITE_API_URL+'/challenge')
+    const query = async() => await axios.get(import.meta.env.VITE_API_URL+'/challenge',{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+    })
       .then((res: any) => {
         setChallenges(res.data);
         setUserInput(res.data[currentChallengeIndex].question);
