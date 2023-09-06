@@ -12,6 +12,7 @@ const Game = () => {
     const query = async() => await axios.get(import.meta.env.VITE_API_URL+'/challenge')
       .then((res: any) => {
         setChallenges(res.data);
+        setUserInput(res.data[currentChallengeIndex].question);
       })
       .catch((error) => {
         console.error('Error fetching challenges:', error);
@@ -26,10 +27,12 @@ const Game = () => {
       // Update the score and move to the next challenge
       setScore(score + 1);
       setCurrentChallengeIndex(currentChallengeIndex + 1);
-      setUserInput('');
+      setUserInput(challenges[currentChallengeIndex + 1].question);
     } else {
         // Incorrect solution
-        alert('Incorrect solution, please try again');
+        // alert('Incorrect solution, please try again');
+        setCurrentChallengeIndex(currentChallengeIndex + 1);
+        setUserInput(challenges[currentChallengeIndex + 1].question);
         }
   };
 
@@ -44,15 +47,14 @@ const Game = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-4">Debugging Bingo</h1>
       <p>Challenge {currentChallengeIndex + 1}/{challenges.length}</p>
       <h2 className="text-xl font-semibold mb-2">{challenges[currentChallengeIndex].description}</h2>
         <p className="mb-4">{challenges[currentChallengeIndex].question}</p>
       <textarea
-        rows={4}
-        cols={50}
         value={userInput}
+        className='input input-accent input-lg h-28 w-96'
         onChange={(e) => setUserInput(e.target.value)}
         placeholder="Enter your code here"
       ></textarea>
