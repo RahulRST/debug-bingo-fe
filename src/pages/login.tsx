@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="card shadow-md shadow-accent p-20">
-        <h2 className="text-2xl font-semibold mb-4 text-accent text-center">
+        <h2 className="text-2xl font-semibold mb-4 text-primary text-center">
           Debug Bingo
         </h2>
         <form onSubmit={handleSubmit}>
