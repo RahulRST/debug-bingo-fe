@@ -70,7 +70,7 @@ const Game = () => {
     </div>
   ) : challenges && challenges[currentChallengeIndex] ? (
     <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-4">Debugging Bingo</h1>
+      <h1 className="text-3xl font-semibold mb-4">Debug Bingo</h1>
       <p>
         Challenge {currentChallengeIndex + 1}/{challenges.length}
       </p>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-4">Welcome to Debugging Bingo!</h1>
+      <h1 className="text-3xl font-semibold mb-4">Welcome to Debug Bingo!</h1>
       <p className="text-lg mb-4">
         Test your coding skills by debugging challenges and earn high scores!
       </p>
