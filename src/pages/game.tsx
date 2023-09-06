@@ -36,7 +36,11 @@ const Game = () => {
       setScore(score + 1);
     }
     setCurrentChallengeIndex(currentChallengeIndex + 1);
-    setUserInput(challenges[currentChallengeIndex + 1]?challenges[currentChallengeIndex + 1].question:"");
+    setUserInput(
+      challenges[currentChallengeIndex + 1]
+        ? challenges[currentChallengeIndex + 1].question
+        : ""
+    );
     if (currentChallengeIndex + 1 >= challenges.length) {
       setFinished(true);
       const handle = async () =>
@@ -63,35 +67,41 @@ const Game = () => {
     }
   };
 
-  return finished ? (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-4">Game Over!</h1>
-      <p>Your final score: {score}</p>
+  return (
+    <div className="container mx-auto">
+      <div className="text-3xl font-semibold mb-4 text-center">Debug Bingo</div>
+      {finished ? (
+        <div className="container mx-auto p-6">
+          <h1 className="text-3xl font-semibold mb-4">Game Over!</h1>
+          <p>Your final score: {score}</p>
+        </div>
+      ) : challenges && challenges[currentChallengeIndex] ? (
+        <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
+          <p>
+            Challenge {currentChallengeIndex + 1}/{challenges.length}
+          </p>
+          <h2 className="text-xl font-semibold mb-2">
+            {challenges[currentChallengeIndex].description}
+          </h2>
+          <p className="mb-4">{challenges[currentChallengeIndex].question}</p>
+          <textarea
+            value={userInput}
+            className="input input-accent input-lg h-28 w-96"
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Enter your code here"
+          ></textarea>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
-  ) : challenges && challenges[currentChallengeIndex] ? (
-    <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-4">Debug Bingo</h1>
-      <p>
-        Challenge {currentChallengeIndex + 1}/{challenges.length}
-      </p>
-      <h2 className="text-xl font-semibold mb-2">
-        {challenges[currentChallengeIndex].description}
-      </h2>
-      <p className="mb-4">{challenges[currentChallengeIndex].question}</p>
-      <textarea
-        value={userInput}
-        className="input input-accent input-lg h-28 w-96"
-        onChange={(e) => setUserInput(e.target.value)}
-        placeholder="Enter your code here"
-      ></textarea>
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
-    </div>
-  ) : <Loader />;
+  );
 };
 
 export default Game;
