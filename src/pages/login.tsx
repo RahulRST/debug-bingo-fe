@@ -38,14 +38,14 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="p-8 rounded shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Debug Bingo</h2>
+      <div className="card shadow-md shadow-accent p-20">
+        <h2 className="text-2xl font-semibold mb-4 text-accent text-center">Debug Bingo</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block badge badge-accent badge-lg text-sm font-bold mb-4"
             >
               Name:
             </label>
@@ -62,7 +62,7 @@ const Login = () => {
           <div className="mb-6">
             <label
               htmlFor="email"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block badge badge-accent badge-lg text-sm font-bold mb-4"
             >
               Email:
             </label>
@@ -76,7 +76,7 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-accent">
             Login
           </button>
         </form>

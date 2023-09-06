@@ -1,20 +1,28 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Game from "./pages/game";
 import Leaderboard from "./pages/leaderboard";
+import Layout from "./layout";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route element={<Layout><Outlet /></Layout>}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Route>
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
 export default App;

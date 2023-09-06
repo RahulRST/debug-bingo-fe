@@ -27,7 +27,10 @@ const Game = () => {
       setScore(score + 1);
       setCurrentChallengeIndex(currentChallengeIndex + 1);
       setUserInput('');
-    }
+    } else {
+        // Incorrect solution
+        alert('Incorrect solution, please try again');
+        }
   };
 
   if (currentChallengeIndex >= challenges.length) {
@@ -45,6 +48,7 @@ const Game = () => {
       <h1 className="text-3xl font-semibold mb-4">Debugging Bingo</h1>
       <p>Challenge {currentChallengeIndex + 1}/{challenges.length}</p>
       <h2 className="text-xl font-semibold mb-2">{challenges[currentChallengeIndex].description}</h2>
+        <p className="mb-4">{challenges[currentChallengeIndex].question}</p>
       <textarea
         rows={4}
         cols={50}
