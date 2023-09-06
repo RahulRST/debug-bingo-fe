@@ -27,7 +27,8 @@ const Login = () => {
           email,
         })
         .then((response) => {
-          localStorage.setItem("user", response.data.user);
+          localStorage.setItem("token", response.data.token);
+          console.log(response.data)
           navigate("/home");
         })
         .catch((error) => {

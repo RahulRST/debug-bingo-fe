@@ -9,7 +9,11 @@ const Leaderboard = () => {
   useEffect(() => {
     setLoading(true);
     // Fetch leaderboard data from your backend API
-    const query = async () => await axios.get(import.meta.env.VITE_API_URL+'/leaderboard') // Replace with the actual API endpoint
+    const query = async () => await axios.get(import.meta.env.VITE_API_URL+'/leaderboard', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+    }) // Replace with the actual API endpoint
       .then((response) => {
         if(response.data.leaderBoard.length === 0) {
             return;
