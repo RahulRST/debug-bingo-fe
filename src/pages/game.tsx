@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Loader from "../components/loader";
 
 const Game = () => {
   const [challenges, setChallenges] = useState<any>();
@@ -8,10 +9,10 @@ const Game = () => {
   const [userInput, setUserInput] = useState("");
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
-  const [duration, setDuration] = useState(0);
+  const [startTime, setStartTime] = useState(0);
 
   useEffect(() => {
-    localStorage.setItem("startTime", Date.now().toString());
+    setStartTime(Date.now());
     const query = async () =>
       await axios
         .get(import.meta.env.VITE_API_URL + "/challenge", {
@@ -38,14 +39,13 @@ const Game = () => {
     setUserInput(challenges[currentChallengeIndex + 1]?challenges[currentChallengeIndex + 1].question:"");
     if (currentChallengeIndex + 1 >= challenges.length) {
       setFinished(true);
-      setDuration((Date.now() - Number(localStorage.getItem("startTime"))) / 1000);
       const handle = async () =>
         await axios
           .post(
             import.meta.env.VITE_API_URL + "/leaderboard/add",
             {
               score: score,
-              duration: duration,
+              duration: (Date.now() - startTime) / 1000,
             },
             {
               headers: {
@@ -91,7 +91,7 @@ const Game = () => {
         Submit
       </button>
     </div>
-  ) : null;
+  ) : <Loader />;
 };
 
 export default Game;

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loader from '../components/loader';
 
 const Leaderboard = () => {
   const [leaderboardData, setLeaderboardData] = useState<any>([]);
@@ -31,7 +32,7 @@ const Leaderboard = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-4">Leaderboard</h1>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <table className="table-auto">
           <thead>
