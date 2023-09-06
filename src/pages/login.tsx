@@ -37,6 +37,7 @@ const Login = () => {
         .finally(() => {
           setLoading(false);
         });
+        
     handlelogin();
 
     setTimeout(() => {
@@ -52,7 +53,6 @@ const Login = () => {
         <h2 className="text-2xl font-semibold mb-4 text-accent text-center">
           Debug Bingo
         </h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -88,6 +88,7 @@ const Login = () => {
               required
             />
           </div>
+          {error && <p className="alert alert-error my-5">{error}</p>}
           <button
             type="submit"
             className={loading ? "btn btn-accent loading" : "btn btn-accent"}

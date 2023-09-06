@@ -12,7 +12,7 @@ const Leaderboard = () => {
     const query = async () => await axios.get(import.meta.env.VITE_API_URL+'/leaderboard', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+        }
     }) // Replace with the actual API endpoint
       .then((response) => {
         if(response.data.leaderBoard.length === 0) {
