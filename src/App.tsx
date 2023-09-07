@@ -7,6 +7,7 @@ import {
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Game from "./pages/game";
+import Bingo from "./pages/bingo";
 import Leaderboard from "./pages/leaderboard";
 import Layout from "./layout";
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route element={<Layout><Outlet /></Layout>}>
           <Route path="/home" element={<Home />} />
           <Route path="/game" element={<Game />} />
+          <Route path="/bingo" element={<Bingo />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
         </Route>
       </Routes>

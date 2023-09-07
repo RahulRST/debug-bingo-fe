@@ -15,6 +15,12 @@ const Home = () => {
           Start a New Game
         </Link>
         <Link
+          to="/bingo"
+          className="btn btn-accent"
+        >
+          Start a New Bingo Game
+        </Link>
+        <Link
           to="/leaderboard" // Replace with the actual route to view the leaderboard
           className="btn btn-glass"
         >
