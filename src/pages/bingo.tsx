@@ -30,16 +30,21 @@ const Bingo = () => {
     query();
     setLoading(false);
   }, []);
-  return loading ? (
-    <Loader />
-  ) : challenges ? (
-    <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
-      {challenges.map((challenge: any, index: number) => {
-        return <Block block={challenge} id={index+1} />
-      })}
-    </div>
-  ) : (
-    <Loader />
+  return (
+  <div className="container mx-auto">
+    <div className="text-3xl font-semibold mb-4 text-center">Bingo Game</div>
+    {loading ? (
+      <Loader />
+    ) : challenges ? (
+      <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
+        {challenges.map((challenge: any, index: number) => {
+          return <Block block={challenge} id={index + 1} />;
+        })}
+      </div>
+    ) : (
+      <Loader />
+    )}
+  </div>
   );
 };
 

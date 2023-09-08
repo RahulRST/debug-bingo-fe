@@ -69,7 +69,7 @@ const Game = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="text-3xl font-semibold mb-4 text-center">Debug Bingo</div>
+      <div className="text-3xl font-semibold mb-4 text-center">Game</div>
       {finished ? (
         <div className="container mx-auto p-6">
           <h1 className="text-3xl font-semibold mb-4">Game Over!</h1>
