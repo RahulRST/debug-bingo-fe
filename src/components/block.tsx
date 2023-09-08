@@ -6,7 +6,7 @@ import { ImCross } from "react-icons/im";
 const Block = (props: any) => {
   const [userInput, setUserInput] = useState(props.block.question);
   const [state, setState] = useState(false);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<any>(null);
 
   const handleSubmit = () => {
     if (userInput.trim() === props.block.solution.trim()) {
@@ -18,7 +18,7 @@ const Block = (props: any) => {
       setState(false);
       setError("Try Again!!!");
       setTimeout(() => {
-        setError("");
+        setError(null);
       }, 2000);
     }
   };
@@ -26,7 +26,7 @@ const Block = (props: any) => {
   const handleClick = () => {
     if(state) return;
     const a = document.createElement("a");
-    a.href = "#" + props.block.id;
+    a.href = "#" + props.id;
     a.click();
   };
 
@@ -41,7 +41,7 @@ const Block = (props: any) => {
         </button>
         {state ? <TiTick className="w-8 h-6" /> : <ImCross />}
       </div>
-      <div className="modal" id={props.block.id}>
+      <div className="modal" id={props.id}>
         <div className="modal-box">
           {/* <h3 className="font-bold text-lg">Hello!</h3>
           <p className="py-4">This modal works with anchor links</p>
@@ -51,7 +51,7 @@ const Block = (props: any) => {
             </a>
           </div> */}
           <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
-            <p>Challenge {props.block.id}</p>
+            <p>Challenge {props.id}</p>
             <h2 className="text-xl font-semibold mb-2">
               {props.block.description}
             </h2>
@@ -62,7 +62,7 @@ const Block = (props: any) => {
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Enter your code here"
             ></textarea>
-            {error != "" ? (
+            {error ? (
               <div className="alert alert-error flex flex-row items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               <span>{error}</span>
