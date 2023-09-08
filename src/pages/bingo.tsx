@@ -33,7 +33,7 @@ const Bingo = () => {
   return loading ? (
     <Loader />
   ) : challenges ? (
-    <div className="grid grid-cols-5 items-center justify-center border-2 border-primary">
+    <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
       {challenges.map((challenge: any) => {
         return <Block block={challenge} />
       })}
