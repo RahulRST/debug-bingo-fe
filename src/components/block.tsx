@@ -1,23 +1,30 @@
 import { useState } from "react";
+import { TiTick } from "react-icons/ti"
+import { ImCross } from "react-icons/im"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const Block = (props: any) => {
   const [userInput, setUserInput] = useState(props.block.question);
+  const [state, setState] = useState(false);
 
   const handleSubmit = () => {
-    props.setState(true);
+    setState(true);
     const a = document.createElement("a");
     a.href = "#";
+    a.click();
+  };
+
+  const handleClick = () => {
+    const a = document.createElement("a");
+    a.href = "#"+props.block.id;
     a.click();
   };
 
   return (
     <>
     <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
-        <div className="badge badge-accent badge-lg m-5">{props.block.category}</div>
-      <a href={"#" + props.block.id} className={props.state?"btn btn-primary btn-disabled":"btn btn-primary"}>
-        Access
-      </a>
+        <button onClick={handleClick} className="badge badge-secondary badge-lg m-5">{props.block.category}</button>
+        {state?<TiTick className="w-8 h-6" />:<ImCross />}
       </div>
       <div className="modal" id={props.block.id}>
         <div className="modal-box">
