@@ -4,11 +4,18 @@ import { useState } from "react";
 const Block = (props: any) => {
   const [userInput, setUserInput] = useState(props.block.question);
 
+  const handleSubmit = () => {
+    props.setState(true);
+    const a = document.createElement("a");
+    a.href = "#";
+    a.click();
+  };
+
   return (
     <>
     <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
         <div className="badge badge-accent badge-lg m-5">{props.block.category}</div>
-      <a href={"#" + props.block.id} className="btn btn-primary">
+      <a href={"#" + props.block.id} className={props.state?"btn btn-primary btn-disabled":"btn btn-primary"}>
         Access
       </a>
       </div>
@@ -33,12 +40,20 @@ const Block = (props: any) => {
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Enter your code here"
             ></textarea>
+            <div className="flex flex-row gap-4 items-center justify-center">
             <a
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4"
-              href="#"
+              className={"btn btn-primary"}
+              onClick={handleSubmit}
             >
               Submit
             </a>
+            <a 
+              href="#"
+              className="btn btn-secondary"
+            >
+              Close
+            </a>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import Block from "../components/block";
 
 const Bingo = () => {
   const [loading, setLoading] = useState(true);
-//   const [startTime, setStartTime] = useState(0);
+  //   const [startTime, setStartTime] = useState(0);
   //   const [score, setScore] = useState(0);
   const [block1, setBlock1] = useState<any>();
   const [block2, setBlock2] = useState<any>();
@@ -25,22 +25,22 @@ const Bingo = () => {
   const [block15, setBlock15] = useState<any>();
   const [block16, setBlock16] = useState<any>();
 
-  //   const [state1, setState1] = useState(false);
-  //   const [state2, setState2] = useState(false);
-  //   const [state3, setState3] = useState(false);
-  //   const [state4, setState4] = useState(false);
-  //     const [state5, setState5] = useState(false);
-  //     const [state6, setState6] = useState(false);
-  //     const [state7, setState7] = useState(false);
-  //     const [state8, setState8] = useState(false);
-  //     const [state9, setState9] = useState(false);
-  //     const [state10, setState10] = useState(false);
-  //     const [state11, setState11] = useState(false);
-  //     const [state12, setState12] = useState(false);
-  //     const [state13, setState13] = useState(false);
-  //     const [state14, setState14] = useState(false);
-  //     const [state15, setState15] = useState(false);
-  //     const [state16, setState16] = useState(false);
+  const [state1, setState1] = useState(false);
+  const [state2, setState2] = useState(false);
+  const [state3, setState3] = useState(false);
+  const [state4, setState4] = useState(false);
+  const [state5, setState5] = useState(false);
+  const [state6, setState6] = useState(false);
+  const [state7, setState7] = useState(false);
+  const [state8, setState8] = useState(false);
+  const [state9, setState9] = useState(false);
+  const [state10, setState10] = useState(false);
+  const [state11, setState11] = useState(false);
+  const [state12, setState12] = useState(false);
+  const [state13, setState13] = useState(false);
+  const [state14, setState14] = useState(false);
+  const [state15, setState15] = useState(false);
+  const [state16, setState16] = useState(false);
 
   useEffect(() => {
     // setStartTime(Date.now());
@@ -81,22 +81,22 @@ const Bingo = () => {
     <Loader />
   ) : block1 && block2 && block3 && block4 ? (
     <div className="grid grid-cols-4 items-center justify-center border-2 border-primary">
-      <Block block={block1} />
-      <Block block={block2} />
-      <Block block={block3} />
-      <Block block={block4} />
-      <Block block={block5} />
-      <Block block={block6} />
-      <Block block={block7} />
-      <Block block={block8} />
-      <Block block={block9} />
-      <Block block={block10} />
-      <Block block={block11} />
-      <Block block={block12} />
-      <Block block={block13} />
-      <Block block={block14} />
-      <Block block={block15} />
-      <Block block={block16} />
+      <Block block={block1} state={state1} setState={setState1} />
+      <Block block={block2} state={state2} setState={setState2} />
+      <Block block={block3} state={state3} setState={setState3} />
+      <Block block={block4} state={state4} setState={setState4} />
+      <Block block={block5} state={state5} setState={setState5} />
+      <Block block={block6} state={state6} setState={setState6} />
+      <Block block={block7} state={state7} setState={setState7} />
+      <Block block={block8} state={state8} setState={setState8} />
+      <Block block={block9} state={state9} setState={setState9} />
+      <Block block={block10} state={state10} setState={setState10} />
+      <Block block={block11} state={state11} setState={setState11} />
+      <Block block={block12} state={state12} setState={setState12} />
+      <Block block={block13} state={state13} setState={setState13} />
+      <Block block={block14} state={state14} setState={setState14} />
+      <Block block={block15} state={state15} setState={setState15} />
+      <Block block={block16} state={state16} setState={setState16} />
     </div>
   ) : (
     <Loader />
