@@ -6,12 +6,11 @@ import Block from "../components/block";
 
 const Bingo = () => {
   const [loading, setLoading] = useState(true);
-  //   const [startTime, setStartTime] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(0);
   //   const [score, setScore] = useState(0);
   const [challenges, setChallenges] = useState<any>();
 
   useEffect(() => {
-    // setStartTime(Date.now());
     const query = async () => {
       await axios
         .get(import.meta.env.VITE_API_URL + "/bingo", {
@@ -30,6 +29,11 @@ const Bingo = () => {
     query();
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => setTimeElapsed(timeElapsed + 1), 1000);
+  }, [timeElapsed]);
+
 
   const updateState = () => {
     const array = [];
@@ -63,9 +67,9 @@ const Bingo = () => {
         count++;
       }
     }
-    for(let i = 1; i <= count; i++) {
+    for (let i = 1; i <= count; i++) {
       const btn = document.getElementById(`btn${i}`);
-      if(btn) {
+      if (btn) {
         btn.classList.remove("btn-glass");
         btn.classList.add("btn-success");
       }
@@ -74,30 +78,44 @@ const Bingo = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="text-3xl font-semibold mb-4 text-center">Bingo Game</div>
-      <div className="flex flex-row items-center justify-center gap-x-2 my-4">
-        <button id="btn1" className="btn btn-circle btn-glass btn-lg">
-          B
-        </button>
-        <button id="btn2" className="btn btn-circle btn-glass btn-lg">
-          I
-        </button>
-        <button id="btn3" className="btn btn-circle btn-glass btn-lg">
-          N
-        </button>
-        <button id="btn4" className="btn btn-circle btn-glass btn-lg">
-          G
-        </button>
-        <button id="btn5" className="btn btn-circle btn-glass btn-lg">
-          O
-        </button>
+      <div className="flex flex-row items-center gap-x-20 justify-center">
+        <div className="flex flex-col items-center justify-center gap-x-2">
+          <div className="text-3xl font-semibold mb-4 text-center">
+            Bingo Game
+          </div>
+          <div className="flex flex-row items-center justify-center gap-x-2 my-4">
+            <button id="btn1" className="btn btn-circle btn-glass btn-lg">
+              B
+            </button>
+            <button id="btn2" className="btn btn-circle btn-glass btn-lg">
+              I
+            </button>
+            <button id="btn3" className="btn btn-circle btn-glass btn-lg">
+              N
+            </button>
+            <button id="btn4" className="btn btn-circle btn-glass btn-lg">
+              G
+            </button>
+            <button id="btn5" className="btn btn-circle btn-glass btn-lg">
+              O
+            </button>
+          </div>
+          <button
+            onClick={updateState}
+            className="btn btn-secondary btn-lg m-5 self-center"
+          >
+            Update State
+          </button>
+        </div>
+        <div className="flex flex-row items-center justify-center gap-x-2">
+          <div className="text-3xl font-semibold mb-4 text-center">
+            Time Elapsed
+          </div>
+          <div className="text-3xl font-semibold mb-4 text-center">
+            {timeElapsed}s
+          </div>
+        </div>
       </div>
-      <button
-          onClick={updateState}
-          className="btn btn-secondary btn-lg m-5 self-center"
-        >
-          Update State
-        </button>
       {loading ? (
         <Loader />
       ) : challenges ? (
