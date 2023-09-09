@@ -63,8 +63,12 @@ const Bingo = () => {
         count++;
       }
     }
-    if(count >= 5){
-      alert("Bingo");
+    for(let i = 1; i <= count; i++) {
+      const btn = document.getElementById(`btn${i}`);
+      if(btn) {
+        btn.classList.remove("btn-glass");
+        btn.classList.add("btn-success");
+      }
     }
   };
 
@@ -72,19 +76,19 @@ const Bingo = () => {
     <div className="flex flex-col items-center justify-center">
       <div className="text-3xl font-semibold mb-4 text-center">Bingo Game</div>
       <div className="flex flex-row items-center justify-center gap-x-2 my-4">
-        <button className="btn btn-circle btn-glass btn-lg">
+        <button id="btn1" className="btn btn-circle btn-glass btn-lg">
           B
         </button>
-        <button className="btn btn-circle btn-glass btn-lg">
+        <button id="btn2" className="btn btn-circle btn-glass btn-lg">
           I
         </button>
-        <button className="btn btn-circle btn-glass btn-lg">
+        <button id="btn3" className="btn btn-circle btn-glass btn-lg">
           N
         </button>
-        <button className="btn btn-circle btn-glass btn-lg">
+        <button id="btn4" className="btn btn-circle btn-glass btn-lg">
           G
         </button>
-        <button className="btn btn-circle btn-glass btn-lg">
+        <button id="btn5" className="btn btn-circle btn-glass btn-lg">
           O
         </button>
       </div>
