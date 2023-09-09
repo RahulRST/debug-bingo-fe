@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
@@ -7,6 +7,10 @@ const Block = (props: any) => {
   const [userInput, setUserInput] = useState(props.block.question);
   const [state, setState] = useState(false);
   const [error, setError] = useState<any>(null);
+
+  useEffect(() => {
+    sessionStorage.setItem(props.id, state.toString());
+  } , [props.id,state]);
 
   const handleSubmit = () => {
     if (userInput.trim() === props.block.solution.trim()) {
