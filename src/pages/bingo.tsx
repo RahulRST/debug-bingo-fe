@@ -7,6 +7,7 @@ import Block from "../components/block";
 const Bingo = () => {
   const [loading, setLoading] = useState(true);
   const [timeElapsed, setTimeElapsed] = useState(0);
+  const [finished, setFinished] = useState(false);
   //   const [score, setScore] = useState(0);
   const [challenges, setChallenges] = useState<any>();
 
@@ -74,6 +75,10 @@ const Bingo = () => {
         btn.classList.add("btn-success");
       }
     }
+    if(count >= 5) {
+      setFinished(true);
+      alert("Bingo!");
+    }
   };
 
   return (
@@ -118,12 +123,12 @@ const Bingo = () => {
       </div>
       {loading ? (
         <Loader />
-      ) : challenges ? (
+      ) : challenges ? ( finished ? ( <div className="text-3xl font-semibold text-secondary"> Bingo </div> ) : (
         <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
           {challenges.map((challenge: any, index: number) => {
             return <Block block={challenge} id={index + 1} />;
           })}
-        </div>
+        </div> )
       ) : (
         <Loader />
       )}
