@@ -26,6 +26,12 @@ const Home = () => {
         >
           View Leaderboard
         </Link>
+        <Link
+          to="/bingoboard"
+          className="btn btn-glass"
+        >
+          View Bingo Leaderboard
+        </Link>
       </div>
     </div>
   );

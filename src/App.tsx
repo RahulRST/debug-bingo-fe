@@ -10,6 +10,7 @@ import Game from "./pages/game";
 import Bingo from "./pages/bingo";
 import Leaderboard from "./pages/leaderboard";
 import Layout from "./layout";
+import Bingoboard from "./pages/bingoboard";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/game" element={<Game />} />
           <Route path="/bingo" element={<Bingo />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/bingoboard" element={<Bingoboard />} />
         </Route>
       </Routes>
     </Router>
