@@ -15,7 +15,7 @@ const Game = () => {
     setStartTime(Date.now());
     const query = async () =>
       await axios
-        .get(import.meta.env.VITE_API_URL + "/challenge", {
+        .get(import.meta.env.VITE_API_URL + "/game", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -46,7 +46,7 @@ const Game = () => {
       const handle = async () =>
         await axios
           .post(
-            import.meta.env.VITE_API_URL + "/leaderboard/add",
+            import.meta.env.VITE_API_URL + "/game/score",
             {
               score: score,
               duration: (Date.now() - startTime) / 1000,
