@@ -52,7 +52,7 @@ const Login: () => JSX.Element = () => {
         <h2 className="text-2xl font-semibold mb-4 text-primary text-center">
           Debug Bingo
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form className="flex flex-col" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="name"
