@@ -17,7 +17,8 @@ const Leaderboard = () => {
     }) // Replace with the actual API endpoint
       .then((response) => {
         if(response.data.leaderBoard.length === 0) {
-            return;
+          setLeaderboardData([]);
+          setLoading(false);
         }
         setLeaderboardData(response.data.leaderBoard);
         console.log(response.data.leaderBoard)
