@@ -9,6 +9,9 @@ const Layout = (props: any) => {
           <Link to="/home" className="btn btn-primary">
             Home
           </Link>
+          <h2 className="text-2xl font-semibold mb-4 text-center">
+            Debug Bingo
+          </h2>
           <Link to="/" className="btn btn-accent">
             Logout
           </Link>

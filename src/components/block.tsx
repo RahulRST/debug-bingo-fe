@@ -39,11 +39,11 @@ const Block = (props: any) => {
       <div className="flex flex-col items-center py-8">
         <button
           onClick={handleClick}
-          className="badge badge-secondary badge-lg m-5"
+          className="badge badge-secondary badge-lg m-5 hover:scale-110 transform transition-all duration-300 ease-in-out"
         >
           {props.block.category}
         </button>
-        {state ? <TiTick className="w-8 h-6" /> : <ImCross />}
+        {state ? <TiTick className="w-8 h-8" /> : <ImCross className="my-2" />}
       </div>
       <div className="modal" id={props.id}>
         <div className="modal-box">

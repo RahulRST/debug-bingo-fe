@@ -32,8 +32,9 @@ const Bingo = () => {
   }, []);
 
   useEffect(() => {
+    if(loading) return;
     setTimeout(() => setTimeElapsed(timeElapsed + 1), 1000);
-  }, [timeElapsed]);
+  }, [loading, timeElapsed]);
 
   const updateState = () => {
     const array = [];
@@ -104,23 +105,20 @@ const Bingo = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-x-2">
-        <div className="text-3xl font-semibold mb-4 text-center">
-          Bingo Game
-        </div>
         <div className="flex flex-row items-center justify-center gap-x-2 my-4">
-          <button id="btn1" className="btn btn-circle btn-glass btn-lg">
+          <button id="btn1" className="btn btn-circle btn-glass btn-lg hover:scale-125 transform transition-all duration-300 ease-in-out">
             B
           </button>
-          <button id="btn2" className="btn btn-circle btn-glass btn-lg">
+          <button id="btn2" className="btn btn-circle btn-glass btn-lg hover:scale-125 transform transition-all duration-300 ease-in-out">
             I
           </button>
-          <button id="btn3" className="btn btn-circle btn-glass btn-lg">
+          <button id="btn3" className="btn btn-circle btn-glass btn-lg hover:scale-125 transform transition-all duration-300 ease-in-out">
             N
           </button>
-          <button id="btn4" className="btn btn-circle btn-glass btn-lg">
+          <button id="btn4" className="btn btn-circle btn-glass btn-lg hover:scale-125 transform transition-all duration-300 ease-in-out">
             G
           </button>
-          <button id="btn5" className="btn btn-circle btn-glass btn-lg">
+          <button id="btn5" className="btn btn-circle btn-glass btn-lg hover:scale-125 transform transition-all duration-300 ease-in-out">
             O
           </button>
         </div>
