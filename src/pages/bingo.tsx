@@ -35,7 +35,6 @@ const Bingo = () => {
     setTimeout(() => setTimeElapsed(timeElapsed + 1), 1000);
   }, [timeElapsed]);
 
-
   const updateState = () => {
     const array = [];
     for (let i = 1; i <= 25; i++) {
@@ -75,35 +74,56 @@ const Bingo = () => {
         btn.classList.add("btn-success");
       }
     }
-    if(count >= 5) {
+    if (count >= 5) {
       setFinished(true);
+      const duration = timeElapsed;
+      const handle = async () =>
+        await axios
+          .post(
+            import.meta.env.VITE_API_URL + "/bingo/score",
+            {
+              duration: duration,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((res: any) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.error("Error adding score to leaderboard:", error);
+          });
+      handle();
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center justify-center gap-x-2">
-          <div className="text-3xl font-semibold mb-4 text-center">
-            Bingo Game
-          </div>
-          <div className="flex flex-row items-center justify-center gap-x-2 my-4">
-            <button id="btn1" className="btn btn-circle btn-glass btn-lg">
-              B
-            </button>
-            <button id="btn2" className="btn btn-circle btn-glass btn-lg">
-              I
-            </button>
-            <button id="btn3" className="btn btn-circle btn-glass btn-lg">
-              N
-            </button>
-            <button id="btn4" className="btn btn-circle btn-glass btn-lg">
-              G
-            </button>
-            <button id="btn5" className="btn btn-circle btn-glass btn-lg">
-              O
-            </button>
-          </div>
-          <div className="flex flex-row items-center my-4 justify-center gap-x-2">
+      <div className="flex flex-col items-center justify-center gap-x-2">
+        <div className="text-3xl font-semibold mb-4 text-center">
+          Bingo Game
+        </div>
+        <div className="flex flex-row items-center justify-center gap-x-2 my-4">
+          <button id="btn1" className="btn btn-circle btn-glass btn-lg">
+            B
+          </button>
+          <button id="btn2" className="btn btn-circle btn-glass btn-lg">
+            I
+          </button>
+          <button id="btn3" className="btn btn-circle btn-glass btn-lg">
+            N
+          </button>
+          <button id="btn4" className="btn btn-circle btn-glass btn-lg">
+            G
+          </button>
+          <button id="btn5" className="btn btn-circle btn-glass btn-lg">
+            O
+          </button>
+        </div>
+        { finished ? <></> : <><div className="flex flex-row items-center my-4 justify-center gap-x-2">
           <div className="text-3xl font-semibold mb-4 text-center">
             Time Elapsed
           </div>
@@ -111,21 +131,25 @@ const Bingo = () => {
             {timeElapsed}s
           </div>
         </div>
-          <button
-            onClick={updateState}
-            className="btn btn-secondary btn-lg m-5 self-center"
-          >
-            Update State
-          </button>
-        </div>
+        <button
+          onClick={updateState}
+          className="btn btn-secondary btn-lg m-5 self-center"
+        >
+          Update State
+        </button></>}
+      </div>
       {loading ? (
         <Loader />
-      ) : challenges ? ( finished ? ( <div className="text-3xl font-semibold text-secondary"> Bingo </div> ) : (
-        <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
-          {challenges.map((challenge: any, index: number) => {
-            return <Block block={challenge} id={index + 1} />;
-          })}
-        </div> )
+      ) : challenges ? (
+        finished ? (
+          <div className="text-3xl font-semibold text-secondary"> Bingo </div>
+        ) : (
+          <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
+            {challenges.map((challenge: any, index: number) => {
+              return <Block block={challenge} id={index + 1} />;
+            })}
+          </div>
+        )
       ) : (
         <Loader />
       )}
