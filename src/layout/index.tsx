@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Layout = (props: any) => {
   return (
     <div className="flex items-center justify-center">
-      <div className="p-8 rounded flex flex-col shadow-md">
+      <div className="p-8 rounded-lg flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <Link to="/home" className="btn btn-primary">
             Home

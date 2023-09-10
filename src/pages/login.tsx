@@ -28,7 +28,6 @@ const Login = () => {
         })
         .then((response) => {
           localStorage.setItem("token", response.data.token);
-          console.log(response.data)
           navigate("/home");
         })
         .catch((error) => {

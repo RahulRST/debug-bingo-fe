@@ -58,7 +58,7 @@ const Game = () => {
             }
           )
           .then((res: any) => {
-            console.log(res);
+            console.log(res.data.message);
           })
           .catch((error) => {
             console.error("Error adding score to leaderboard:", error);

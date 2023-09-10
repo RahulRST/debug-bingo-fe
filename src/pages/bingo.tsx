@@ -8,6 +8,7 @@ const Bingo = () => {
   const [loading, setLoading] = useState(true);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [finalTime, setFinalTime] = useState(0);
   //   const [score, setScore] = useState(0);
   const [challenges, setChallenges] = useState<any>();
 
@@ -21,7 +22,6 @@ const Bingo = () => {
         })
         .then((res: any) => {
           setChallenges(res.data.challenges);
-          console.log(res.data);
         })
         .catch((error) => {
           console.error("Error fetching challenges:", error);
@@ -77,6 +77,7 @@ const Bingo = () => {
     if (count >= 5) {
       setFinished(true);
       const duration = timeElapsed;
+      setFinalTime(duration);
       const handle = async () =>
         await axios
           .post(
@@ -91,7 +92,7 @@ const Bingo = () => {
             }
           )
           .then((res: any) => {
-            console.log(res);
+            console.log(res.data.message);
           })
           .catch((error) => {
             console.error("Error adding score to leaderboard:", error);
@@ -123,7 +124,7 @@ const Bingo = () => {
             O
           </button>
         </div>
-        { finished ? <></> : <><div className="flex flex-row items-center my-4 justify-center gap-x-2">
+        { finished ? ( finalTime ? <div className="text-3xl font-semibold mb-4 text-center"> Time Elapsed : {finalTime} </div> : <></>) : <><div className="flex flex-row items-center my-4 justify-center gap-x-2">
           <div className="text-3xl font-semibold mb-4 text-center">
             Time Elapsed
           </div>
