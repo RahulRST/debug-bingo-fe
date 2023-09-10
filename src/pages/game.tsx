@@ -3,17 +3,17 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Loader from "../components/loader";
 
-const Game = () => {
+const Game: () => JSX.Element = () => {
   const [challenges, setChallenges] = useState<any>();
-  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
-  const [userInput, setUserInput] = useState("");
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [startTime, setStartTime] = useState(0);
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState<number>(0);
+  const [userInput, setUserInput] = useState<string>("");
+  const [score, setScore] = useState<number>(0);
+  const [finished, setFinished] = useState<boolean>(false);
+  const [startTime, setStartTime] = useState<number>(0);
 
   useEffect(() => {
     setStartTime(Date.now());
-    const query = async () =>
+    const query: () => Promise<void> = async () =>
       await axios
         .get(import.meta.env.VITE_API_URL + "/game", {
           headers: {
@@ -30,7 +30,7 @@ const Game = () => {
     query();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit: () => void = () => {
     const currentChallenge: any = challenges[currentChallengeIndex];
     if (userInput.trim() === currentChallenge.solution.trim()) {
       setScore(score + 1);
@@ -43,7 +43,7 @@ const Game = () => {
     );
     if (currentChallengeIndex + 1 >= challenges.length) {
       setFinished(true);
-      const handle = async () =>
+      const handle: () => Promise<void> = async () =>
         await axios
           .post(
             import.meta.env.VITE_API_URL + "/game/score",

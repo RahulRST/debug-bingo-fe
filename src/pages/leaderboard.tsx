@@ -3,18 +3,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loader from '../components/loader';
 
-const Leaderboard = () => {
+const Leaderboard: () => JSX.Element = () => {
   const [leaderboardData, setLeaderboardData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);
-    // Fetch leaderboard data from your backend API
-    const query = async () => await axios.get(import.meta.env.VITE_API_URL+'/leaderboard/game', {
+    const query: () => Promise<void> = async () => await axios.get(import.meta.env.VITE_API_URL+'/leaderboard/game', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
-    }) // Replace with the actual API endpoint
+    })
       .then((response) => {
         if(response.data.leaderBoard.length === 0) {
           setLeaderboardData([]);

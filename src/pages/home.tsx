@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const Home: () => JSX.Element = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-4">Welcome to Debug Bingo!</h1>

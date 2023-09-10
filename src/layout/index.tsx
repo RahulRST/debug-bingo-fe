@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/logo.tsx";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const Layout = (props: any) => {
+const Layout: (props: { children: any }) => JSX.Element = (props) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="p-8 rounded-lg flex flex-col items-center justify-center">

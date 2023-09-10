@@ -3,16 +3,16 @@ import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const Block = (props: any) => {
-  const [userInput, setUserInput] = useState(props.block.question);
-  const [state, setState] = useState(false);
+const Block: (props: any) => JSX.Element = (props) => {
+  const [userInput, setUserInput] = useState<any>(props.block.question);
+  const [state, setState] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
     sessionStorage.setItem(props.id, state.toString());
   } , [props.id,state]);
 
-  const handleSubmit = () => {
+  const handleSubmit: () => void = () => {
     if (userInput.trim() === props.block.solution.trim()) {
       setState(true);
       const a = document.createElement("a");
@@ -27,7 +27,7 @@ const Block = (props: any) => {
     }
   };
 
-  const handleClick = () => {
+  const handleClick: () => void = () => {
     if(state) return;
     const a = document.createElement("a");
     a.href = "#" + props.id;

@@ -12,7 +12,7 @@ import Leaderboard from "./pages/leaderboard";
 import Layout from "./layout";
 import Bingoboard from "./pages/bingoboard";
 
-const App = () => {
+const App: () => JSX.Element = () => {
   return (
     <Router>
       <Routes>

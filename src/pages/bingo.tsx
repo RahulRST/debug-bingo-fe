@@ -4,15 +4,15 @@ import Loader from "../components/loader";
 import axios from "axios";
 import Block from "../components/block";
 
-const Bingo = () => {
-  const [loading, setLoading] = useState(true);
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [finalTime, setFinalTime] = useState(0);
+const Bingo: () => JSX.Element = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [timeElapsed, setTimeElapsed] = useState<number>(0);
+  const [finished, setFinished] = useState<boolean>(false);
+  const [finalTime, setFinalTime] = useState<number>(0);
   const [challenges, setChallenges] = useState<any>();
 
   useEffect(() => {
-    const query = async () => {
+    const query: () => Promise<void> = async () => {
       await axios
         .get(import.meta.env.VITE_API_URL + "/bingo", {
           headers: {
@@ -38,7 +38,7 @@ const Bingo = () => {
     updateState();
   }, [timeElapsed]);
 
-  const updateState = () => {
+  const updateState: () => void = () => {
     const array = [];
     for (let i = 1; i <= 25; i++) {
       array.push(sessionStorage.getItem(i.toString()));
@@ -71,7 +71,7 @@ const Bingo = () => {
       }
     }
     for (let i = 1; i <= count; i++) {
-      const btn = document.getElementById(`btn${i}`);
+      const btn: HTMLElement | null = document.getElementById(`btn${i}`);
       if (btn) {
         btn.classList.remove("btn-glass");
         btn.classList.add("btn-success");
@@ -81,7 +81,7 @@ const Bingo = () => {
       setFinished(true);
       const duration = timeElapsed;
       setFinalTime(duration);
-      const handle = async () =>
+      const handle: () => Promise<void> = async () =>
         await axios
           .post(
             import.meta.env.VITE_API_URL + "/bingo/score",

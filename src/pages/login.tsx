@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { FormEvent, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-const Login = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+const Login: () => JSX.Element = () => {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit: (e: FormEvent) => void = (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -20,7 +20,7 @@ const Login = () => {
       return;
     }
 
-    const handlelogin = async () =>
+    const handlelogin: () => Promise<void> = async () =>
       await axios
         .post(import.meta.env.VITE_API_URL + "/auth/login", {
           name,
