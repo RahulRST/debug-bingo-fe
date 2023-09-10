@@ -9,7 +9,6 @@ const Bingo = () => {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [finished, setFinished] = useState(false);
   const [finalTime, setFinalTime] = useState(0);
-  //   const [score, setScore] = useState(0);
   const [challenges, setChallenges] = useState<any>();
 
   useEffect(() => {

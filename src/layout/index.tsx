@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "../assets/logo.tsx";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const Layout = (props: any) => {
@@ -9,9 +10,7 @@ const Layout = (props: any) => {
           <Link to="/home" className="btn btn-primary">
             Home
           </Link>
-          <h2 className="text-2xl font-semibold mb-4 text-center">
-            Debug Bingo
-          </h2>
+          <Logo />
           <Link to="/" className="btn btn-accent">
             Logout
           </Link>
