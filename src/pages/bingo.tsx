@@ -77,13 +77,11 @@ const Bingo = () => {
     }
     if(count >= 5) {
       setFinished(true);
-      alert("Bingo!");
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-row items-center gap-x-20 justify-center">
         <div className="flex flex-col items-center justify-center gap-x-2">
           <div className="text-3xl font-semibold mb-4 text-center">
             Bingo Game
@@ -105,14 +103,7 @@ const Bingo = () => {
               O
             </button>
           </div>
-          <button
-            onClick={updateState}
-            className="btn btn-secondary btn-lg m-5 self-center"
-          >
-            Update State
-          </button>
-        </div>
-        <div className="flex flex-row items-center justify-center gap-x-2">
+          <div className="flex flex-row items-center my-4 justify-center gap-x-2">
           <div className="text-3xl font-semibold mb-4 text-center">
             Time Elapsed
           </div>
@@ -120,7 +111,13 @@ const Bingo = () => {
             {timeElapsed}s
           </div>
         </div>
-      </div>
+          <button
+            onClick={updateState}
+            className="btn btn-secondary btn-lg m-5 self-center"
+          >
+            Update State
+          </button>
+        </div>
       {loading ? (
         <Loader />
       ) : challenges ? ( finished ? ( <div className="text-3xl font-semibold text-secondary"> Bingo </div> ) : (
