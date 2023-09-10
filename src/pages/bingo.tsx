@@ -32,9 +32,12 @@ const Bingo = () => {
   }, []);
 
   useEffect(() => {
-    if(loading) return;
+    if(loading){
+      setTimeElapsed(0);
+    }
     setTimeout(() => setTimeElapsed(timeElapsed + 1), 1000);
-  }, [loading, timeElapsed]);
+    updateState();
+  }, [timeElapsed]);
 
   const updateState = () => {
     const array = [];
@@ -75,7 +78,7 @@ const Bingo = () => {
         btn.classList.add("btn-success");
       }
     }
-    if (count >= 5) {
+    if (count >= 5 && !finished) {
       setFinished(true);
       const duration = timeElapsed;
       setFinalTime(duration);
@@ -94,6 +97,7 @@ const Bingo = () => {
           )
           .then((res: any) => {
             console.log(res.data.message);
+            sessionStorage.clear();
           })
           .catch((error) => {
             console.error("Error adding score to leaderboard:", error);
@@ -122,26 +126,14 @@ const Bingo = () => {
             O
           </button>
         </div>
-        { finished ? ( finalTime ? <div className="text-3xl font-semibold mb-4 text-center"> Time Elapsed : {finalTime} </div> : <></>) : <><div className="flex flex-row items-center my-4 justify-center gap-x-2">
-          <div className="text-3xl font-semibold mb-4 text-center">
-            Time Elapsed
-          </div>
-          <div className="text-3xl font-semibold mb-4 text-center">
-            {timeElapsed}s
-          </div>
-        </div>
-        <button
-          onClick={updateState}
-          className="btn btn-secondary btn-lg m-5 self-center"
-        >
-          Update State
-        </button></>}
+        { finished ? ( finalTime ? <div className="text-3xl font-semibold m-4 text-center"> Time Elapsed : {finalTime} </div> : <></>) : <div className="text-3xl font-semibold m-4 text-center"> Time Elapsed : {timeElapsed} </div> }
       </div>
       {loading ? (
         <Loader />
       ) : challenges ? (
-        finished ? (
+        finished ? (<div className="flex flex-col gap-y-4 items-center justify-center my-3">
           <div className="text-3xl font-semibold text-secondary"> Bingo </div>
+          </div>
         ) : (
           <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
             {challenges.map((challenge: any, index: number) => {

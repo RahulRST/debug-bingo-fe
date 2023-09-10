@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const Layout = (props: any) => {
   return (
-    <div className="flex items-center justify-center">
-      <div className="p-8 rounded-lg flex flex-col">
-        <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="p-8 rounded-lg flex flex-col items-center justify-center">
+        <div className="flex flex-row items-center gap-x-10 min-w-full justify-around mb-4">
           <Link to="/home" className="btn btn-primary">
             Home
           </Link>
