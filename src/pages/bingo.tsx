@@ -8,8 +8,25 @@ const Bingo: () => JSX.Element = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
   const [finished, setFinished] = useState<boolean>(false);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [error, setError] = useState<any>();
   const [finalTime, setFinalTime] = useState<number>(0);
   const [challenges, setChallenges] = useState<any>();
+
+  const bingoPatterns = [
+    [0, 1, 2, 3, 4],
+    [5, 6, 7, 8, 9],
+    [10, 11, 12, 13, 14],
+    [15, 16, 17, 18, 19],
+    [20, 21, 22, 23, 24],
+    [0, 5, 10, 15, 20],
+    [1, 6, 11, 16, 21],
+    [2, 7, 12, 17, 22],
+    [3, 8, 13, 18, 23],
+    [4, 9, 14, 19, 24],
+    [0, 6, 12, 18, 24],
+    [4, 8, 12, 16, 20],
+  ];
 
   useEffect(() => {
     const query: () => Promise<void> = async () => {
@@ -38,25 +55,19 @@ const Bingo: () => JSX.Element = () => {
     updateState();
   }, [timeElapsed]);
 
-  const updateState: () => void = () => {
+  const getState: () => Array<any> = () => {
     const array = [];
     for (let i = 1; i <= 25; i++) {
       array.push(sessionStorage.getItem(i.toString()));
     }
-    const bingoPatterns = [
-      [0, 1, 2, 3, 4],
-      [5, 6, 7, 8, 9],
-      [10, 11, 12, 13, 14],
-      [15, 16, 17, 18, 19],
-      [20, 21, 22, 23, 24],
-      [0, 5, 10, 15, 20],
-      [1, 6, 11, 16, 21],
-      [2, 7, 12, 17, 22],
-      [3, 8, 13, 18, 23],
-      [4, 9, 14, 19, 24],
-      [0, 6, 12, 18, 24],
-      [4, 8, 12, 16, 20],
-    ];
+    return array;
+  }
+
+  const updateState: () => void = () => {
+    const array = getState();
+    for (let i = 1; i <= 25; i++) {
+      array.push(sessionStorage.getItem(i.toString()));
+    }
     let count = 0;
     for (let i = 0; i < bingoPatterns.length; i++) {
       let flag = true;
@@ -79,6 +90,7 @@ const Bingo: () => JSX.Element = () => {
     }
     if (count >= 5 && !finished) {
       setFinished(true);
+      setUploading(true);
       const duration = timeElapsed;
       setFinalTime(duration);
       const handle: () => Promise<void> = async () =>
@@ -87,6 +99,7 @@ const Bingo: () => JSX.Element = () => {
             import.meta.env.VITE_API_URL + "/bingo/score",
             {
               duration: duration,
+              state: count,
             },
             {
               headers: {
@@ -97,13 +110,62 @@ const Bingo: () => JSX.Element = () => {
           .then((res: any) => {
             console.log(res.data.message);
             sessionStorage.clear();
+            setUploading(false);
           })
           .catch((error) => {
             console.error("Error adding score to leaderboard:", error);
+            setError(error.message);
+            setUploading(false);
           });
       handle();
     }
   };
+
+  const submitState = () => {
+    const array = getState();
+    let count = 0;
+    for (let i = 0; i < bingoPatterns.length; i++) {
+      let flag = true;
+      for (let j = 0; j < bingoPatterns[i].length; j++) {
+        if (array[bingoPatterns[i][j]] !== "true") {
+          flag = false;
+          break;
+        }
+      }
+      if (flag) {
+        count++;
+      }
+    }
+    const duration = timeElapsed;
+    setFinished(true);
+    setUploading(true);
+    const handle: () => Promise<void> = async () =>
+      await axios
+        .post(
+          import.meta.env.VITE_API_URL + "/bingo/score",
+          {
+            duration: duration,
+            state: count,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((res: any) => {
+          console.log(res.data.message);
+          sessionStorage.clear();
+          setUploading(false);
+        })
+        .catch((error) => {
+          console.error("Error adding score to leaderboard:", error);
+          setError(error.message);
+          setUploading(false);
+        });
+    handle();
+  };
+
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -130,13 +192,16 @@ const Bingo: () => JSX.Element = () => {
       {loading ? (
         <Loader />
       ) : challenges ? (
-        finished ? (<div className="flex flex-col gap-y-4 items-center justify-center my-3">
+        finished ? uploading ? <Loader /> : error ? (<div className="flex flex-col gap-y-4 items-center justify-center my-3">
+        <div className="text-3xl font-semibold text-secondary">{error}</div>
+        </div>
+      ) : (<div className="flex flex-col gap-y-4 items-center justify-center my-3">
           <div className="text-3xl font-semibold text-secondary"> Bingo </div>
           </div>
         ) : (
           <div className="grid grid-cols-5 items-center justify-center p-4 m-4 rounded-xl border-2 border-secondary shadow-2xl shadow-accent">
             {challenges.map((challenge: any, index: number) => {
-              return <Block block={challenge} id={index + 1} />;
+              return <Block key={index} block={challenge} id={index + 1} />;
             })}
           </div>
         )

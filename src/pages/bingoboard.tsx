@@ -44,7 +44,7 @@ const Bingoboard: () => JSX.Element = () => {
           </thead>
           <tbody>
             {leaderboardData.map((entry: any, index: any) => (
-              <tr key={entry.userId}>
+              <tr key={index}>
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{entry.user.name}</td>
                 <td className="border px-4 py-2">{entry.duration}</td>
