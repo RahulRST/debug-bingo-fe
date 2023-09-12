@@ -63,11 +63,8 @@ const Bingo: () => JSX.Element = () => {
     return array;
   };
 
-  const updateState: () => void = () => {
+  const getPatternCount: () => number = () => {
     const array = getState();
-    for (let i = 1; i <= 25; i++) {
-      array.push(sessionStorage.getItem(i.toString()));
-    }
     let count = 0;
     for (let i = 0; i < bingoPatterns.length; i++) {
       let flag = true;
@@ -81,6 +78,10 @@ const Bingo: () => JSX.Element = () => {
         count++;
       }
     }
+    return count;
+  };
+
+  const updateButton = (count: number) => {
     for (let i = 1; i <= count; i++) {
       const btn: HTMLElement | null = document.getElementById(`btn${i}`);
       if (btn) {
@@ -88,82 +89,53 @@ const Bingo: () => JSX.Element = () => {
         btn.classList.add("btn-success");
       }
     }
+  };
+
+  const handleScore: (count: number) => Promise<void> = async (count) => {
+    const duration = timeElapsed;
+    setFinalTime(duration);
+    await axios
+      .post(
+        import.meta.env.VITE_API_URL + "/bingo/score",
+        {
+          duration: duration,
+          state: count,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res: any) => {
+        console.log(res.data.message);
+        sessionStorage.clear();
+      })
+      .catch((error) => {
+        console.error("Error adding score to leaderboard:", error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setUploading(false);
+      });
+  };
+
+  const updateState: () => void = () => {
+    const count = getPatternCount();
+    updateButton(count);
     if (count >= 5 && !finished) {
       setFinished(true);
       setUploading(true);
-      const duration = timeElapsed;
-      setFinalTime(duration);
-      const handle: () => Promise<void> = async () =>
-        await axios
-          .post(
-            import.meta.env.VITE_API_URL + "/bingo/score",
-            {
-              duration: duration,
-              state: count,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          )
-          .then((res: any) => {
-            console.log(res.data.message);
-            sessionStorage.clear();
-            setUploading(false);
-          })
-          .catch((error) => {
-            console.error("Error adding score to leaderboard:", error);
-            setError(error.message);
-            setUploading(false);
-          });
-      handle();
+      handleScore(count);
     }
   };
 
   const submitState = () => {
-    const array = getState();
-    let count = 0;
-    for (let i = 0; i < bingoPatterns.length; i++) {
-      let flag = true;
-      for (let j = 0; j < bingoPatterns[i].length; j++) {
-        if (array[bingoPatterns[i][j]] !== "true") {
-          flag = false;
-          break;
-        }
-      }
-      if (flag) {
-        count++;
-      }
-    }
-    const duration = timeElapsed;
+    const count = getPatternCount();
+    updateButton(count);
     setFinished(true);
     setUploading(true);
-    const handle: () => Promise<void> = async () =>
-      await axios
-        .post(
-          import.meta.env.VITE_API_URL + "/bingo/score",
-          {
-            duration: duration,
-            state: count,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
-        .then((res: any) => {
-          console.log(res.data.message);
-          sessionStorage.clear();
-          setUploading(false);
-        })
-        .catch((error) => {
-          console.error("Error adding score to leaderboard:", error);
-          setError(error.message);
-          setUploading(false);
-        });
-    handle();
+    handleScore(count);
   };
 
   return (
@@ -224,15 +196,39 @@ const Bingo: () => JSX.Element = () => {
           uploading ? (
             <Loader />
           ) : error ? (
-<div className="alert alert-error">
-  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-  <span>{error}</span>
-</div>
+            <div className="alert alert-error">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
           ) : (
-<div className="alert alert-info">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-  <span>Score Added Successfully</span>
-</div>
+            <div className="alert">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="stroke-current shrink-0 w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span>Score Added Successfully</span>
+            </div>
           )
         ) : (
           <>

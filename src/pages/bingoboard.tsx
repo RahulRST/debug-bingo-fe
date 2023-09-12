@@ -33,10 +33,10 @@ const Bingoboard: () => JSX.Element = () => {
   return (
     <div className="flex flex-col items-center justify-center p-6">
       <h1 className="text-3xl font-semibold mb-4">Leaderboard</h1>
-      <Confetti />
       {loading ? (
         <Loader />
       ) : (
+       <> <Confetti />
         <table className="table-auto">
           <thead>
             <tr>
@@ -64,7 +64,7 @@ const Bingoboard: () => JSX.Element = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></>
       )}
     </div>
   );
