@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -11,6 +12,7 @@ const Login: () => JSX.Element = () => {
   const navigate = useNavigate();
 
   const handleSubmit: (e: FormEvent) => void = (e) => {
+    try{
     e.preventDefault();
     setLoading(true);
 
@@ -30,8 +32,8 @@ const Login: () => JSX.Element = () => {
           localStorage.setItem("token", response.data.token);
           navigate("/home");
         })
-        .catch((error) => {
-          setError(error.response.data.message);
+        .catch((err) => {
+          setError(err.message);
         })
         .finally(() => {
           setLoading(false);
@@ -44,6 +46,15 @@ const Login: () => JSX.Element = () => {
       setEmail("");
       setError("");
     }, 5000);
+  } catch (error: any) {
+    console.error("Error logging in:", error);
+    setError(error.message);
+    setLoading(false);
+    setTimeout(() => {
+      setError("");
+    }
+    , 5000);
+  }
   };
 
   return (

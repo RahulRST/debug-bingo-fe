@@ -21,6 +21,7 @@ const Bingoboard: () => JSX.Element = () => {
             setLoading(false);
         }
         setLeaderboardData(response.data.leaderBoard);
+        console.log(response.data.leaderBoard)
         setLoading(false);
   }).catch((error) => {
         console.error('Error fetching leaderboard data:', error);
@@ -39,6 +40,7 @@ const Bingoboard: () => JSX.Element = () => {
             <tr>
               <th className="px-4 py-2">Rank</th>
               <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">State</th>
               <th className="px-4 py-2">Duration</th>
             </tr>
           </thead>
@@ -47,6 +49,15 @@ const Bingoboard: () => JSX.Element = () => {
               <tr key={index}>
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{entry.user.name}</td>
+                <td className="border px-4 py-2">
+                  <div className='flex flex-row items-center justify-center'>
+                    <div className={entry.state > 0 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                    <div className={entry.state > 1 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                    <div className={entry.state > 2 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                    <div className={entry.state > 3 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                    <div className={entry.state > 4 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                  </div>
+                </td>
                 <td className="border px-4 py-2">{entry.duration}</td>
               </tr>
             ))}
