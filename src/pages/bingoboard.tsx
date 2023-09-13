@@ -60,7 +60,7 @@ const Bingoboard: () => JSX.Element = () => {
                     <div className={entry.state > 4 ? 'badge badge-success' : 'badge badge-neutral'}></div>
                   </div>
                 </td>
-                <td className="border px-4 py-2">{entry.duration}</td>
+                <td className="border px-4 py-2">{entry.duration}s</td>
               </tr>
             ))}
           </tbody>
