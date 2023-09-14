@@ -16,8 +16,18 @@ const Block: (props: any) => JSX.Element = (props) => {
     setUserInput(props.block.question);
   }, [props.block.question]);
 
+  const getNoSpaceString: (str: string) => string = (str) => {
+    const splitArray = str.split(" ");
+    let newstr= ''
+    splitArray.forEach((ele: string) => {
+      newstr = newstr + ele;
+    })
+    return newstr;
+
+  }
+
   const handleSubmit: () => void = () => {
-    if (userInput.trim() === props.block.solution.trim()) {
+    if (getNoSpaceString(userInput) === getNoSpaceString(props.block.solution)) {
       setState(true);
       const a = document.createElement("a");
       a.href = "#";
