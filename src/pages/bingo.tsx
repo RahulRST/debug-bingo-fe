@@ -4,22 +4,6 @@ import Loader from "../components/loader";
 import axios from "axios";
 import Block from "../components/block";
 
-interface allStateType {
-  B: boolean,
-  I: boolean,
-  N: boolean,
-  G: boolean,
-  O: boolean
-}
-
-interface allTimeType {
-  B: number,
-  I: number,
-  N: number,
-  G: number,
-  O: number
-}
-
 const Bingo: () => JSX.Element = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
@@ -28,21 +12,6 @@ const Bingo: () => JSX.Element = () => {
   const [error, setError] = useState<any>();
   const [finalTime, setFinalTime] = useState<number>(0);
   const [challenges, setChallenges] = useState<any>();
-
-  const [allState, setAllState] = useState<allStateType>({
-    B: false,
-    I: false,
-    N: false,
-    G: false,
-    O: false
-  });
-  const [allTime, setAllTime] = useState<allTimeType>({
-    B: Number.MAX_SAFE_INTEGER,
-    I: Number.MAX_SAFE_INTEGER,
-    N: Number.MAX_SAFE_INTEGER,
-    G: Number.MAX_SAFE_INTEGER,
-    O: Number.MAX_SAFE_INTEGER
-  });
 
   const bingoPatterns = [
     [0, 1, 2, 3, 4],
@@ -114,25 +83,50 @@ const Bingo: () => JSX.Element = () => {
   };
 
   const updateStateTime = () => {
-    if(getPatternCount() == 1 && !allState.B) {
-      setAllState({...allState, B: true});
-      setAllTime({...allTime, B: timeElapsed / 100});
+    const count = getPatternCount();
+    const time = timeElapsed.toString();
+
+    if (count == 1) {
+      sessionStorage.setItem("B", time);
+    } else if (count == 2) {
+      if(sessionStorage.getItem("B" ) == null) {
+        sessionStorage.setItem("B", time);
+      }
+      sessionStorage.setItem("I", time);
+    } else if (count == 3) {
+      if(sessionStorage.getItem("B" ) == null) {
+        sessionStorage.setItem("B", time);
+      }
+      if(sessionStorage.getItem("I" ) == null) {
+        sessionStorage.setItem("I", time);
+      }
+      sessionStorage.setItem("N", time);
+    } else if (count == 4) {
+      if(sessionStorage.getItem("B" ) == null) {
+        sessionStorage.setItem("B", time);
+      }
+      if(sessionStorage.getItem("I" ) == null) {
+        sessionStorage.setItem("I", time);
+      }
+      if(sessionStorage.getItem("N" ) == null) {
+        sessionStorage.setItem("N", time);
+      }
+      sessionStorage.setItem("G", time);
     }
-    if(getPatternCount() == 2 && !allState.I) {
-      setAllState({...allState, I: true});
-      setAllTime({...allTime, I: timeElapsed / 100});
-    }
-    if(getPatternCount() == 3 && !allState.N) {
-      setAllState({...allState, N: true});
-      setAllTime({...allTime, N: timeElapsed / 100});
-    }
-    if(getPatternCount() == 4 && !allState.G) {
-      setAllState({...allState, G: true});
-      setAllTime({...allTime, G: timeElapsed / 100});
-    }
-    if(getPatternCount() == 5 && !allState.O) {
-      setAllState({...allState, O: true});
-      setAllTime({...allTime, O: timeElapsed / 100});
+    else if (count == 5) {
+      if(sessionStorage.getItem("B" ) == null) {
+        sessionStorage.setItem("B", time);
+      }
+      if(sessionStorage.getItem("I" ) == null) {
+        sessionStorage.setItem("I", time);
+      }
+      if(sessionStorage.getItem("N" ) == null) {
+        sessionStorage.setItem("N", time);
+      }
+      if(sessionStorage.getItem("G" ) == null) {
+        sessionStorage.setItem("G", time);
+      }
+      sessionStorage.setItem("O", time);
     }
   }
 
@@ -147,9 +141,14 @@ const Bingo: () => JSX.Element = () => {
   };
 
   const handleScore: (count: number) => Promise<void> = async (count) => {
-    const duration = timeElapsed / 100;
-    setFinalTime(duration);
-    console.log(allState, allTime)
+    const allTime = {
+      B: parseInt(sessionStorage.getItem("B") || "0") / 100,
+      I: parseInt(sessionStorage.getItem("I") || "0") / 100,
+      N: parseInt(sessionStorage.getItem("N") || "0") / 100,
+      G: parseInt(sessionStorage.getItem("G") || "0") / 100,
+      O: parseInt(sessionStorage.getItem("O") || "0") / 100,
+    };
+    setFinalTime(count > 4 ? allTime.O : count > 3 ? allTime.G : count > 2 ? allTime.N : count > 1 ? allTime.I : count > 0 ? allTime.B : 0)
     await axios
       .post(
         import.meta.env.VITE_API_URL + "/bingo/score",
@@ -158,7 +157,7 @@ const Bingo: () => JSX.Element = () => {
           iduration: count > 1 ? allTime.I : null,
           nduration: count > 2 ? allTime.N : null,
           gduration: count > 3 ? allTime.G : null,
-          oduration: count > 4 ? duration : null,
+          oduration: count > 4 ? allTime.O : null,
           state: count,
         },
         {
