@@ -4,6 +4,22 @@ import Loader from "../components/loader";
 import axios from "axios";
 import Block from "../components/block";
 
+interface allStateType {
+  B: boolean,
+  I: boolean,
+  N: boolean,
+  G: boolean,
+  O: boolean
+}
+
+interface allTimeType {
+  B: number,
+  I: number,
+  N: number,
+  G: number,
+  O: number
+}
+
 const Bingo: () => JSX.Element = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
@@ -12,6 +28,21 @@ const Bingo: () => JSX.Element = () => {
   const [error, setError] = useState<any>();
   const [finalTime, setFinalTime] = useState<number>(0);
   const [challenges, setChallenges] = useState<any>();
+
+  const [allState, setAllState] = useState<allStateType>({
+    B: false,
+    I: false,
+    N: false,
+    G: false,
+    O: false
+  });
+  const [allTime, setAllTime] = useState<allTimeType>({
+    B: Number.MAX_SAFE_INTEGER,
+    I: Number.MAX_SAFE_INTEGER,
+    N: Number.MAX_SAFE_INTEGER,
+    G: Number.MAX_SAFE_INTEGER,
+    O: Number.MAX_SAFE_INTEGER
+  });
 
   const bingoPatterns = [
     [0, 1, 2, 3, 4],
@@ -80,6 +111,53 @@ const Bingo: () => JSX.Element = () => {
     }
     return count;
   };
+
+  useEffect(() => {
+    switch(getPatternCount()) {
+      case 0:
+        break;
+      case 1:
+        if(allState.B)
+          break;
+        else {
+          setAllState({...allState, B: true})
+          setAllTime({...allTime, B: timeElapsed})
+          break;
+        }
+      case 2:
+        if(allState.I)
+          break;
+        else {
+          setAllState({...allState, I: true})
+          setAllTime({...allTime, I: timeElapsed})
+          break;
+        }
+      case 3:
+        if(allState.N)
+          break;
+        else {
+          setAllState({...allState, N: true})
+          setAllTime({...allTime, N: timeElapsed})
+          break;
+        }
+      case 4:
+        if(allState.G)
+          break;
+        else {
+          setAllState({...allState, G: true})
+          setAllTime({...allTime, G: timeElapsed})
+          break;
+        }
+      case 5:
+        if(allState.O)
+          break;
+        else {
+          setAllState({...allState, O: true})
+          setAllTime({...allTime, O: timeElapsed})
+          break;
+        }
+    }
+  }, [getPatternCount()]);
 
   const updateButton = (count: number) => {
     for (let i = 1; i <= count; i++) {

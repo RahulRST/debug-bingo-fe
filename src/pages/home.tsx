@@ -26,12 +26,12 @@ const Home: () => JSX.Element = () => {
         >
           View Leaderboard
         </Link> */}
-        <Link
+        {/* <Link
           to="/bingoboard"
           className="btn btn-glass"
         >
           View Bingo Leaderboard
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
