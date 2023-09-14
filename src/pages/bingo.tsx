@@ -51,7 +51,7 @@ const Bingo: () => JSX.Element = () => {
     if (loading) {
       setTimeElapsed(0);
     }
-    setTimeout(() => setTimeElapsed(timeElapsed + 1), 100);
+    setTimeout(() => setTimeElapsed(timeElapsed + 1), 10);
     updateState();
   }, [timeElapsed]);
 
@@ -92,7 +92,7 @@ const Bingo: () => JSX.Element = () => {
   };
 
   const handleScore: (count: number) => Promise<void> = async (count) => {
-    const duration = timeElapsed / 10;
+    const duration = timeElapsed / 100;
     setFinalTime(duration);
     await axios
       .post(
@@ -185,7 +185,7 @@ const Bingo: () => JSX.Element = () => {
         ) : (
           <div className="text-3xl font-semibold m-4 text-center">
             {" "}
-            Time Elapsed : {timeElapsed / 10}{" "} s
+            Time Elapsed : {timeElapsed / 100}{" "} s
           </div>
         )}
       </div>
