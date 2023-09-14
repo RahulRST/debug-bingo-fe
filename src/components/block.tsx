@@ -61,7 +61,7 @@ const Block: (props: any) => JSX.Element = (props) => {
           <div className="flex flex-col gap-y-4 items-center mx-auto p-6">
             <div className="flex flex-row gap-x-4 items-center justify-center">
               <p>Challenge {props.id}</p>
-              <div className="badge badge-lg p-4 hover:scale-110 transform transition-all duration-300 ease-in-out">
+              <div className="badge badge-neutral badge-lg p-4 hover:scale-110 transform transition-all duration-300 ease-in-out">
                 {props.block.language}
               </div>
             </div>
