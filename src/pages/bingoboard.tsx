@@ -43,7 +43,7 @@ const Bingoboard: () => JSX.Element = () => {
               <th className="px-4 py-2">Rank</th>
               <th className="px-4 py-2">Username</th>
               <th className="px-4 py-2">State</th>
-              <th className="px-4 py-2">Duration</th>
+              {/* <th className="px-4 py-2">Duration</th> */}
             </tr>
           </thead>
           <tbody>
@@ -52,15 +52,15 @@ const Bingoboard: () => JSX.Element = () => {
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{entry.user.name}</td>
                 <td className="border px-4 py-2">
-                  <div className='flex flex-row items-center justify-center'>
-                    <div className={entry.state > 0 ? 'badge badge-success' : 'badge badge-neutral'}></div>
-                    <div className={entry.state > 1 ? 'badge badge-success' : 'badge badge-neutral'}></div>
-                    <div className={entry.state > 2 ? 'badge badge-success' : 'badge badge-neutral'}></div>
-                    <div className={entry.state > 3 ? 'badge badge-success' : 'badge badge-neutral'}></div>
-                    <div className={entry.state > 4 ? 'badge badge-success' : 'badge badge-neutral'}></div>
+                  <div className='flex flex-row items-center gap-x-1 justify-center'>
+                    <div className='tooltip' data-tip={entry.state > 0 ? entry.bduration : ""}><div className={entry.state > 0 ? 'badge badge-success' : 'badge badge-neutral'}></div></div>
+                    <div className='tooltip' data-tip={entry.state > 1 ? entry.iduration : ""}><div className={entry.state > 1 ? 'badge badge-success' : 'badge badge-neutral'}></div></div>
+                    <div className='tooltip' data-tip={entry.state > 2 ? entry.nduration : ""}><div className={entry.state > 2 ? 'badge badge-success' : 'badge badge-neutral'}></div></div>
+                    <div className='tooltip' data-tip={entry.state > 3 ? entry.gduration : ""}><div className={entry.state > 3 ? 'badge badge-success' : 'badge badge-neutral'}></div></div>
+                    <div className='tooltip' data-tip={entry.state > 4 ? entry.oduration : ""}><div className={entry.state > 4 ? 'badge badge-success' : 'badge badge-neutral'}></div></div>
                   </div>
                 </td>
-                <td className="border px-4 py-2">{entry.duration}s</td>
+                {/* <td className="border px-4 py-2">{entry.duration}s</td> */}
               </tr>
             ))}
           </tbody>

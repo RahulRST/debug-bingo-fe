@@ -83,7 +83,8 @@ const Bingo: () => JSX.Element = () => {
       setTimeElapsed(0);
     }
     setTimeout(() => setTimeElapsed(timeElapsed + 1), 10);
-    updateState();
+    updateButton(getPatternCount());
+    updateStateTime();
   }, [timeElapsed]);
 
   const getState: () => Array<any> = () => {
@@ -112,52 +113,28 @@ const Bingo: () => JSX.Element = () => {
     return count;
   };
 
-  useEffect(() => {
-    switch(getPatternCount()) {
-      case 0:
-        break;
-      case 1:
-        if(allState.B)
-          break;
-        else {
-          setAllState({...allState, B: true})
-          setAllTime({...allTime, B: timeElapsed})
-          break;
-        }
-      case 2:
-        if(allState.I)
-          break;
-        else {
-          setAllState({...allState, I: true})
-          setAllTime({...allTime, I: timeElapsed})
-          break;
-        }
-      case 3:
-        if(allState.N)
-          break;
-        else {
-          setAllState({...allState, N: true})
-          setAllTime({...allTime, N: timeElapsed})
-          break;
-        }
-      case 4:
-        if(allState.G)
-          break;
-        else {
-          setAllState({...allState, G: true})
-          setAllTime({...allTime, G: timeElapsed})
-          break;
-        }
-      case 5:
-        if(allState.O)
-          break;
-        else {
-          setAllState({...allState, O: true})
-          setAllTime({...allTime, O: timeElapsed})
-          break;
-        }
+  const updateStateTime = () => {
+    if(getPatternCount() == 1 && !allState.B) {
+      setAllState({...allState, B: true});
+      setAllTime({...allTime, B: timeElapsed / 100});
     }
-  }, [getPatternCount()]);
+    if(getPatternCount() == 2 && !allState.I) {
+      setAllState({...allState, I: true});
+      setAllTime({...allTime, I: timeElapsed / 100});
+    }
+    if(getPatternCount() == 3 && !allState.N) {
+      setAllState({...allState, N: true});
+      setAllTime({...allTime, N: timeElapsed / 100});
+    }
+    if(getPatternCount() == 4 && !allState.G) {
+      setAllState({...allState, G: true});
+      setAllTime({...allTime, G: timeElapsed / 100});
+    }
+    if(getPatternCount() == 5 && !allState.O) {
+      setAllState({...allState, O: true});
+      setAllTime({...allTime, O: timeElapsed / 100});
+    }
+  }
 
   const updateButton = (count: number) => {
     for (let i = 1; i <= count; i++) {
@@ -172,11 +149,16 @@ const Bingo: () => JSX.Element = () => {
   const handleScore: (count: number) => Promise<void> = async (count) => {
     const duration = timeElapsed / 100;
     setFinalTime(duration);
+    console.log(allState, allTime)
     await axios
       .post(
         import.meta.env.VITE_API_URL + "/bingo/score",
         {
-          duration: duration,
+          bduration: count > 0 ? allTime.B : null,
+          iduration: count > 1 ? allTime.I : null,
+          nduration: count > 2 ? allTime.N : null,
+          gduration: count > 3 ? allTime.G : null,
+          oduration: count > 4 ? duration : null,
           state: count,
         },
         {
@@ -198,22 +180,21 @@ const Bingo: () => JSX.Element = () => {
       });
   };
 
-  const updateState: () => void = () => {
-    const count = getPatternCount();
-    updateButton(count);
-    if (count >= 5 && !finished) {
-      setFinished(true);
-      setUploading(true);
-      handleScore(count);
-    }
-  };
+  // const updateState: () => void = () => {
+  //   const count = getPatternCount();
+  //   updateButton(count);
+  //   if (count >= 5 && !finished) {
+  //     setFinished(true);
+  //     setUploading(true);
+  //     handleScore(count);
+  //   }
+  // };
 
   const submitState = () => {
-    const count = getPatternCount();
-    updateButton(count);
+    updateButton(getPatternCount());
     setFinished(true);
     setUploading(true);
-    handleScore(count);
+    handleScore(getPatternCount());
   };
 
   return (
