@@ -89,46 +89,63 @@ const Bingo: () => JSX.Element = () => {
     if (count == 1) {
       sessionStorage.setItem("B", time);
     } else if (count == 2) {
-      if(sessionStorage.getItem("B" ) == null) {
+      if (sessionStorage.getItem("B") == null) {
         sessionStorage.setItem("B", time);
+        sessionStorage.setItem("I", time);
+      } else {
+        sessionStorage.setItem("I", time);
       }
-      sessionStorage.setItem("I", time);
     } else if (count == 3) {
-      if(sessionStorage.getItem("B" ) == null) {
+      if (sessionStorage.getItem("B") == null) {
         sessionStorage.setItem("B", time);
-      }
-      if(sessionStorage.getItem("I" ) == null) {
         sessionStorage.setItem("I", time);
+        sessionStorage.setItem("N", time);
+      } else if (sessionStorage.getItem("I") == null) {
+        sessionStorage.setItem("I", time);
+        sessionStorage.setItem("N", time);
+      } else {
+        sessionStorage.setItem("N", time);
       }
-      sessionStorage.setItem("N", time);
     } else if (count == 4) {
-      if(sessionStorage.getItem("B" ) == null) {
+      if (sessionStorage.getItem("B") == null) {
         sessionStorage.setItem("B", time);
-      }
-      if(sessionStorage.getItem("I" ) == null) {
         sessionStorage.setItem("I", time);
-      }
-      if(sessionStorage.getItem("N" ) == null) {
         sessionStorage.setItem("N", time);
-      }
-      sessionStorage.setItem("G", time);
-    }
-    else if (count == 5) {
-      if(sessionStorage.getItem("B" ) == null) {
-        sessionStorage.setItem("B", time);
-      }
-      if(sessionStorage.getItem("I" ) == null) {
+        sessionStorage.setItem("G", time);
+      } else if (sessionStorage.getItem("I") == null) {
         sessionStorage.setItem("I", time);
-      }
-      if(sessionStorage.getItem("N" ) == null) {
         sessionStorage.setItem("N", time);
-      }
-      if(sessionStorage.getItem("G" ) == null) {
+        sessionStorage.setItem("G", time);
+      } else if (sessionStorage.getItem("N") == null) {
+        sessionStorage.setItem("N", time);
+        sessionStorage.setItem("G", time);
+      } else {
         sessionStorage.setItem("G", time);
       }
-      sessionStorage.setItem("O", time);
+    } else if (count == 5) {
+      if (sessionStorage.getItem("B") == null) {
+        sessionStorage.setItem("B", time);
+        sessionStorage.setItem("I", time);
+        sessionStorage.setItem("N", time);
+        sessionStorage.setItem("G", time);
+        sessionStorage.setItem("O", time);
+      } else if (sessionStorage.getItem("I") == null) {
+        sessionStorage.setItem("I", time);
+        sessionStorage.setItem("N", time);
+        sessionStorage.setItem("G", time);
+        sessionStorage.setItem("O", time);
+      } else if (sessionStorage.getItem("N") == null) {
+        sessionStorage.setItem("N", time);
+        sessionStorage.setItem("G", time);
+        sessionStorage.setItem("O", time);
+      } else if (sessionStorage.getItem("G") == null) {
+        sessionStorage.setItem("G", time);
+        sessionStorage.setItem("O", time);
+      } else {
+        sessionStorage.setItem("O", time);
+      }
     }
-  }
+  };
 
   const updateButton = (count: number) => {
     for (let i = 1; i <= count; i++) {
@@ -148,7 +165,19 @@ const Bingo: () => JSX.Element = () => {
       G: parseInt(sessionStorage.getItem("G") || "0") / 100,
       O: parseInt(sessionStorage.getItem("O") || "0") / 100,
     };
-    setFinalTime(count > 4 ? allTime.O : count > 3 ? allTime.G : count > 2 ? allTime.N : count > 1 ? allTime.I : count > 0 ? allTime.B : 0)
+    setFinalTime(
+      count > 4
+        ? allTime.O
+        : count > 3
+        ? allTime.G
+        : count > 2
+        ? allTime.N
+        : count > 1
+        ? allTime.I
+        : count > 0
+        ? allTime.B
+        : 0
+    );
     await axios
       .post(
         import.meta.env.VITE_API_URL + "/bingo/score",
@@ -235,7 +264,7 @@ const Bingo: () => JSX.Element = () => {
           finalTime ? (
             <div className="text-3xl font-semibold m-4 text-center">
               {" "}
-              Time Elapsed : {finalTime}{" "} s
+              Time Elapsed : {finalTime} s
             </div>
           ) : (
             <></>
@@ -243,7 +272,7 @@ const Bingo: () => JSX.Element = () => {
         ) : (
           <div className="text-3xl font-semibold m-4 text-center">
             {" "}
-            Time Elapsed : {timeElapsed / 100}{" "} s
+            Time Elapsed : {timeElapsed / 100} s
           </div>
         )}
       </div>
