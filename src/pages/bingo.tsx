@@ -272,7 +272,7 @@ const Bingo: () => JSX.Element = () => {
         ) : (
           <div className="text-3xl font-semibold m-4 text-center">
             {" "}
-            Time Elapsed : {timeElapsed / 100} s
+            Time Elapsed : {(timeElapsed / 100).toFixed(0)} s
           </div>
         )}
       </div>
